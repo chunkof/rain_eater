@@ -1,0 +1,1 @@
+MyDef.logic = {};

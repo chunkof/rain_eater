@@ -1,6 +1,6 @@
 Rain Eater
 ==========
 
-Play on githubpages
+Play on GitHubPages.
 
 http://chunkof.github.io/rain_eater/

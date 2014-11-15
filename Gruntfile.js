@@ -120,7 +120,6 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-autoshot');
     
-    grunt.registerTask('default', ['clean', 'concat', 'uglify', 'copy']);
-//  grunt.registerTask('default', ['clean', 'concat', 'uglify', 'copy', 'autoshot']);
+    grunt.registerTask('default', ['clean', 'concat', 'uglify', 'copy', 'autoshot']);
 
 };

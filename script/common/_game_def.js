@@ -7,7 +7,7 @@ window.MyDef = [];
     MyDef.healColorShadow   = "#000671";
     MyDef.healColorLight    = "#AFDFFF";
     MyDef.eaterColor        = "#F692BF";
-    MyDef.eaterColorShadow  = "#3F1115";
+    MyDef.eaterColorShadow  = "#7F1115";
     MyDef.storageName       = "__rain_eater__";
     MyDef.getRank = function(score){
         if (250 < score){

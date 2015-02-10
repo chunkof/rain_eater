@@ -33,7 +33,7 @@
     p.prototype.isDead           = false;
     // shape setting
     p.prototype.rad = 8;
-    p.prototype.pipe_len = 20;
+    p.prototype.pipe_len = 22;
     p.prototype.pipe_bold = 4;
     p.prototype.initialize = function () {
         this._parentInitialize();
@@ -50,7 +50,7 @@
         if (0 != this.stateCount){
             return;
         }
-        this.graphics.clear();
+        //this.graphics.clear();
     };
     p.prototype.drawShapeHeal = function(){
         if (0 != this.stateCount){
@@ -64,7 +64,7 @@
             // edge
             var rad = this.rad;
             this.graphics.beginFill(fg_color)
-                .beginStroke(bg_color).setStrokeStyle(2)
+                .beginStroke(bg_color).setStrokeStyle(1)
                 .drawCircle(0, 0, rad+0.3).endStroke();
 
             this.graphics.beginFill(bg_color).drawCircle(0, 0, rad*0.7);
@@ -72,7 +72,7 @@
             var bold = this.pipe_bold;
             var len = this.pipe_len;
             this.graphics.beginFill(fg_color)
-                .beginStroke(bg_color).setStrokeStyle(2)
+                .beginStroke(bg_color).setStrokeStyle(1)
                 .drawRect(0, -(bold / 2), len, bold).endStroke();
             // core
             this.graphics.beginFill(fg_color).drawCircle(0, 0, rad*0.5);
@@ -125,7 +125,7 @@
     p.prototype.setStateDamage = function(){
         this.state = State.DAMAGE;
         this.stateCount = 0;
-        this.stateRemainCount = MyDef.fps/6;
+        this.stateRemainCount = 1;//MyDef.fps/10;
     };
     p.prototype.setStateHeal = function(){
         this.state = State.HEAL;
@@ -177,19 +177,42 @@
         switch(collision.type){
             case MyDef.Ball.Type.DAMAGE:
                 this.setStateDamage();
+                this._reflectCollision(collision);
                 break;
             case MyDef.Ball.Type.HEAL:
                 this.setStateHeal();
+                MyGlobal.stageManager.notifyCollision(collision);
                 break;
         }
         this.updateDraw();
-        MyGlobal.stageManager.notifyCollision(collision);
+
     };
+    p.prototype._reflectCollision = function(tgt) {
+        // calc angle
+        var adjustRad = MyUt.GetRad(this.x, this.y, tgt.x, tgt.y);
+        var adjustCos = Math.cos(adjustRad);
+        var adjustSin = Math.sin(adjustRad);
+        // adjust pos
+
+        var distance = MyUt.GetLen(tgt.x,tgt.y, this.x,this.y);
+        var adjustLen  = (this.rad + tgt.rad) - distance;
+        this.x -= adjustLen * adjustCos *2;
+        this.y -= adjustLen * adjustSin *2;
+
+        // bound
+        var ref_normalize = 1;
+        var n={ vX:ref_normalize*adjustCos,
+                vY:ref_normalize*adjustSin};
+        var ref_vec = MyUt.GetRefVector(this, n);
+        this.vX = ref_vec.vX + (tgt.vX) + (this.vX*0.5);
+        this.vY = ref_vec.vY + (tgt.vY) + (this.vY*0.5);
+        
+    } 
     p.prototype.doAccele = function () {
         if (0 != this.actionWait) {
             return;
         }
-        this.actionWait = 10;
+        this.actionWait = 6;
         var v = MyUt.DegToV(this.rotation);
 
         var smog = MyGlobal.stage.addChild(new MyDef.Smog());
@@ -198,8 +221,9 @@
         smog.vX = 0.5*v.x;
         smog.vY = 0.5*v.y;
 
-        this.vX += v.x * -1.5;
-        this.vY += v.y * -1.5;
+        var acceleration = 2.0;
+        this.vX += v.x * -acceleration;
+        this.vY += v.y * -acceleration;
     };
     p.prototype.dead = function(){
         this.isDead = true;

@@ -67,7 +67,9 @@
         if (this._border_len_sq > len_seq+0.1)
         {
             player.notifyCollision(this);
-            MyGlobal.stage.removeChild(this);
+            if (MyDef.Ball.Type.HEAL == this.type){
+                MyGlobal.stage.removeChild(this);
+            }
         }
     };
 }());

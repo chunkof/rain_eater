@@ -47,10 +47,12 @@
         this.drawShapeImpl(MyDef.eaterColorShadow, MyDef.eaterColor);
     };
     p.prototype.drawShapeDamage = function(){
-        if (0 != this.stateCount){
-            return;
+        if (0 == this.stateCount){
+            this.graphics.clear();
         }
-        //this.graphics.clear();
+        if (3 == this.stateCount){
+            this.drawShapeImpl(MyDef.eaterColorShadow, MyDef.eaterColor);
+        }
     };
     p.prototype.drawShapeHeal = function(){
         if (0 != this.stateCount){
@@ -125,7 +127,7 @@
     p.prototype.setStateDamage = function(){
         this.state = State.DAMAGE;
         this.stateCount = 0;
-        this.stateRemainCount = 1;//MyDef.fps/10;
+        this.stateRemainCount = MyDef.fps/6;
     };
     p.prototype.setStateHeal = function(){
         this.state = State.HEAL;
@@ -176,10 +178,13 @@
     p.prototype.notifyCollision = function (collision) {
         switch(collision.type){
             case MyDef.Ball.Type.DAMAGE:
+                createjs.Sound.play("damage");
                 this.setStateDamage();
                 this._reflectCollision(collision);
+                MyGlobal.stageManager.notifyCollision(collision);
                 break;
             case MyDef.Ball.Type.HEAL:
+                createjs.Sound.play("gain");
                 this.setStateHeal();
                 MyGlobal.stageManager.notifyCollision(collision);
                 break;
@@ -196,22 +201,24 @@
 
         var distance = MyUt.GetLen(tgt.x,tgt.y, this.x,this.y);
         var adjustLen  = (this.rad + tgt.rad) - distance;
-        this.x -= adjustLen * adjustCos *2;
-        this.y -= adjustLen * adjustSin *2;
+        this.x -= adjustLen * adjustCos *3;
+        this.y -= adjustLen * adjustSin *3;
 
         // bound
         var ref_normalize = 1;
         var n={ vX:ref_normalize*adjustCos,
                 vY:ref_normalize*adjustSin};
         var ref_vec = MyUt.GetRefVector(this, n);
-        this.vX = ref_vec.vX + (tgt.vX) + (this.vX*0.5);
-        this.vY = ref_vec.vY + (tgt.vY) + (this.vY*0.5);
+        this.vX = ref_vec.vX + (tgt.vX*0.5) + (this.vX*0.5);
+        this.vY = ref_vec.vY + (tgt.vY*0.5) + (this.vY*0.5);
         
     } 
     p.prototype.doAccele = function () {
         if (0 != this.actionWait) {
             return;
         }
+        createjs.Sound.play("accele",{interrupt: createjs.Sound.INTERRUPT_EARLY, volume:0.4});
+        
         this.actionWait = 6;
         var v = MyUt.DegToV(this.rotation);
 
@@ -221,13 +228,14 @@
         smog.vX = 0.5*v.x;
         smog.vY = 0.5*v.y;
 
-        var acceleration = 2.0;
+        var acceleration = 1.5;
         this.vX += v.x * -acceleration;
         this.vY += v.y * -acceleration;
     };
     p.prototype.dead = function(){
         this.isDead = true;
         // bomb
+        createjs.Sound.play("destruction");
         var bomb = MyGlobal.stage.addChild(new createjs.Shape());
         bomb.x = this.x;bomb.y = this.y;
         bomb.rad = this.rad*0.5;

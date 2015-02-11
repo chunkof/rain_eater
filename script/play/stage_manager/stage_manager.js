@@ -77,7 +77,7 @@
         switch(collision.type){
             case MyDef.Ball.Type.DAMAGE:
                 this.remainTime -= 10;
-                pop = MyGlobal.stage.addChild(new createjs.Text("-10","bold 200px Arial", collision.symbolColor));
+                pop = MyGlobal.stage.addChild(new createjs.Text("-10","bold  80px Arial", collision.symbolColor));
                 pop.alpha = 0.3;
                 break;
             case MyDef.Ball.Type.HEAL:

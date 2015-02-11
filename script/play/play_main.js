@@ -11,7 +11,7 @@ var StartGame = MyDef.StartGame = function(stage_name){
     player.y = stage.centerY;
     var border1 = stage.addChild(new MyDef.Border({
         x:stage.centerX, y:stage.centerY
-        , rad:  350, color: "gray"
+        , rad:  360, color: "gray"
         , rad2: 380, color2:"gray"
     }));
 

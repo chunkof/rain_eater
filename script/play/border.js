@@ -52,6 +52,8 @@
         var ref_vec = MyUt.GetRefVector(player, n);
         player.vX = ref_vec.vX;
         player.vY = ref_vec.vY;
+        
+        createjs.Sound.play("collision", {volume:0.2});
     };
 }());
 

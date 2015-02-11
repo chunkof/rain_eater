@@ -10,10 +10,21 @@ window.OnLoad = function() {
     var objMain = document.getElementById('stats');
     objMain.appendChild( stats.domElement );
 
+    loadSound();
     InitStage();
     MyDef.StartSelectStage();
-    //MyDef.PlayStage();
 }
+
+function loadSound () {
+//  createjs.Sound.registerSound("sound/se_maoudamashii_system38.mp3", "collision");
+//  createjs.Sound.registerSound("sound/se_maoudamashii_system49.mp3", "gain");
+  createjs.Sound.registerSound("sound/damage5.mp3", "collision");
+  createjs.Sound.registerSound("sound/damage4.mp3", "damage");
+  createjs.Sound.registerSound("sound/coin05.mp3",  "gain");
+  createjs.Sound.registerSound("sound/destruction1.mp3", "destruction");
+  createjs.Sound.registerSound("sound/handy_lasergun.mp3", "accele");
+}
+
 
 var InitStage = function(){
     var canvas = document.getElementById("canvas");

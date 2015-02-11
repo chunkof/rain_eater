@@ -13,7 +13,7 @@
         this._parentInitialize();
         // add custom setup logic.
         this.graphics.beginFill(MyDef.eaterColor).drawCircle(0,0,5);
-        this.alpha = 0.33;
+        this.alpha = 0.5;
     };
     // Method
     p.prototype._tick = function() {
@@ -24,7 +24,12 @@
     p.prototype.tickImpl = function() {
         this.x += this.vX;
         this.y += this.vY;
-        this.alpha -= 0.002;
+        
+        var rateX = Math.random()+0.1;
+        var rateY = Math.random()+0.1;
+        this.scaleX += 0.020*rateX;
+        this.scaleY += 0.020*rateY;
+        this.alpha  -= 0.005*(rateX+rateY)/2;
         if(this.alpha < 0.001)
         {
           MyGlobal.stage.removeChild(this);

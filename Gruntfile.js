@@ -84,6 +84,12 @@ module.exports = function(grunt){
                 src: '**',
                 dest : release_dir+"lib/",
                 flatten: false
+            },
+            sound : {
+                expand: true,
+                cwd: 'sound/',
+                src: '**',
+                dest : release_dir+"sound/",
             }
         },
 

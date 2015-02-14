@@ -13,7 +13,7 @@
         this._parentInitialize();
         // add custom setup logic.
         this.graphics.beginFill(MyDef.eaterColor).drawCircle(0,0,5);
-        this.alpha = 0.5;
+        this.alpha = 0.4;
     };
     // Method
     p.prototype._tick = function() {
@@ -22,14 +22,18 @@
         this.tickImpl();
     };
     p.prototype.tickImpl = function() {
+        // update position status
         this.x += this.vX;
         this.y += this.vY;
+        this.vX *= 0.99;
+        this.vY *= 0.99;
         
-        var rateX = Math.random()+0.1;
-        var rateY = Math.random()+0.1;
+        // update draw status
+        var rateX = Math.random()*1.1;
+        var rateY = Math.random()*1.1;
         this.scaleX += 0.020*rateX;
         this.scaleY += 0.020*rateY;
-        this.alpha  -= 0.005*(rateX+rateY)/2;
+        this.alpha  -= 0.003*(rateX+rateY)/2;
         if(this.alpha < 0.001)
         {
           MyGlobal.stage.removeChild(this);

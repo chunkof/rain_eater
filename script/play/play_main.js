@@ -11,8 +11,8 @@ var StartGame = MyDef.StartGame = function(stage_name){
     player.y = stage.centerY;
     var border1 = stage.addChild(new MyDef.Border({
         x:stage.centerX, y:stage.centerY
-        , rad:  360, color: "gray"
-        , rad2: 380, color2:"gray"
+        , rad:  360, color:  MyDef.objectColor
+        , rad2: 380, color2: MyDef.objectColor
     }));
 
     // shooter
@@ -29,8 +29,8 @@ var StartGame = MyDef.StartGame = function(stage_name){
             tmp.logics.push(new MyDef.logic.Move(0.5));
             tmp.logics.push(new MyDef.logic.AimTarget(player));
             tmp.logics.push(new MyDef.logic.Shoot({interval: MyDef.fps*1.3,shots:[
-                    {per: 92, type:MyDef.Ball.Type.DAMAGE, speed:1.3, rad:7.5},
-                    {per:  8, type:MyDef.Ball.Type.HEAL  , speed:0.6, rad:7.5}
+                    {per: 92, type:MyDef.Ball.Type.REFLECT, speed:1.3, rad:7.5},
+                    {per:  8, type:MyDef.Ball.Type.HEAL   , speed:0.6, rad:7.5}
                 ]}));
         tmp = stage.addChild(new MyDef.Shooter({circle:border1, degree:  90}));
         tmp.logics.push(new MyDef.logic.Move(0.5));
@@ -134,20 +134,38 @@ var StartGame = MyDef.StartGame = function(stage_name){
         ]}));
         break;
     case "labo":
+        var c_3_ball_rad = function(){
+            return MyUt.RndRangeFloor(5,34);
+        };
         tmp = stage.addChild(new MyDef.Shooter({circle:border1, degree:  0}));
-            tmp.logics.push(new MyDef.logic.Move(0.7));
-            tmp.logics.push(new MyDef.logic.AimTarget(player));
-            tmp.logics.push(new MyDef.logic.Shoot({interval: MyDef.fps*1.7,shots:[
-                    {per: 80, type:MyDef.Ball.Type.DAMAGE, speed:1.0, rad:7.5},
-                    {per: 20, type:MyDef.Ball.Type.HEAL  , speed:0.5, rad:7.5}
-                ]}));
+        tmp.logics.push(new MyDef.logic.Move(0.7));
+        tmp.logics.push(new MyDef.logic.AimTarget(player));
+        tmp.logics.push(new MyDef.logic.Shoot({interval: MyDef.fps*1.2+0,shots:[
+            {per: 96, type:MyDef.Ball.Type.REFLECT, speed:1.3, rad:c_3_ball_rad},
+            {per:  4, type:MyDef.Ball.Type.HEAL  , speed:0.7, rad:c_3_ball_rad}
+        ]}));
         tmp = stage.addChild(new MyDef.Shooter({circle:border1, degree:  90}));
         tmp.logics.push(new MyDef.logic.Move(0.7));
         tmp.logics.push(new MyDef.logic.AimTarget(player));
-        tmp.logics.push(new MyDef.logic.Shoot({interval: MyDef.fps*1.7, shots:[
-                {per: 80, type:MyDef.Ball.Type.DAMAGE, speed:1.2, rad:7.5},
-                {per: 20, type:MyDef.Ball.Type.HEAL  , speed:0.5, rad:7.5}
-            ]}));
+        tmp.logics.push(new MyDef.logic.Shoot({interval: MyDef.fps*1.2+1, shots:[
+            {per: 96, type:MyDef.Ball.Type.REFLECT, speed:1.3, rad:c_3_ball_rad},
+            {per:  4, type:MyDef.Ball.Type.HEAL  , speed:0.7, rad:c_3_ball_rad}
+        ]}));
+        tmp = stage.addChild(new MyDef.Shooter({circle:border1, degree:180}));
+        tmp.logics.push(new MyDef.logic.Move(0.7));
+        tmp.logics.push(new MyDef.logic.AimTarget(player));
+        tmp.logics.push(new MyDef.logic.Shoot({interval: MyDef.fps*1.1+0, shots:[
+            {per: 96, type:MyDef.Ball.Type.REFLECT, speed:1.3, rad:c_3_ball_rad},
+            {per:  4, type:MyDef.Ball.Type.HEAL  , speed:0.7, rad:c_3_ball_rad}
+        ]}));
+        tmp = stage.addChild(new MyDef.Shooter({circle:border1, degree:270}));
+        tmp.logics.push(new MyDef.logic.Move(0.7));
+        tmp.logics.push(new MyDef.logic.AimTarget(player));
+        tmp.logics.push(new MyDef.logic.Shoot({interval: MyDef.fps*1.1+1, shots:[
+            {per: 97, type:MyDef.Ball.Type.REFLECT, speed:1.3, rad:c_3_ball_rad},
+            {per:  3, type:MyDef.Ball.Type.HEAL  , speed:0.7, rad:c_3_ball_rad}
+        ]}));
+        break;
         break;
     case "labo_2_3": // pattern lv2 or 3
         tmp_speed = 2.8;

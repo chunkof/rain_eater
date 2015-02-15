@@ -8,8 +8,9 @@
     p.prototype = new _base();
     // public def
     MyDef.Ball.Type = {
-        DAMAGE : 0,
-        HEAL   : 1};
+        REFLECT: 0,
+        DAMAGE : 1,
+        HEAL   : 2};
     // Initialize
     p.prototype.initialize = function(spec) {
         _base.prototype.initialize.call(this);
@@ -18,14 +19,23 @@
         this.vY = 0;
         this.rad  = spec.rad;
         this.type = spec.type;
-        if (MyDef.Ball.Type.HEAL == this.type){
+        switch (this.type)
+        {
+        case MyDef.Ball.Type.REFLECT:
+            this.symbolColor = MyDef.objectColor;
+            this.subColor    = MyDef.objectColorShadow;
+            break;
+        case MyDef.Ball.Type.HEAL:
             this.symbolColor = MyDef.healColor;
             this.subColor    = MyDef.healColorShadow;
-        }else{
+            break;
+        case MyDef.Ball.Type.DAMAGE:
+        default:
             this.symbolColor = MyDef.damageColor;
-            this.subColor    = "black";
+            this.subColor    = MyDef.damageColorShadow
+            break;;
         }
-
+        
         var margin = 60;
         this.minX = 0-this.rad-margin;
         this.maxX = MyGlobal.stage.width+this.rad+margin;
@@ -58,6 +68,7 @@
         this.y += this.vY;
         this.collision();
     };
+    // collision
     p.prototype.collision = function(){
         var player = MyGlobal.player;
         if (!player.isHittable()){

@@ -2,12 +2,15 @@ window.MyDef = [];
 (function () {
     MyDef.fps = 40;
     MyDef.bgColor = MyUt.rgb(38,38,38);
-    MyDef.damageColor = "White";
+    MyDef.damageColor       = "White";
+    MyDef.damageShadow      = "Black";
     MyDef.healColor         = "DeepSkyBlue";
     MyDef.healColorShadow   = "#000671";
     MyDef.healColorLight    = "#AFDFFF";
     MyDef.eaterColor        = "#F692BF";
     MyDef.eaterColorShadow  = "#7F1115";
+    MyDef.objectColor        = "Gray";
+    MyDef.objectColorShadow  = "Black";
     MyDef.storageName       = "__rain_eater__";
     MyDef.getRank = function(score){
         if (250 < score){

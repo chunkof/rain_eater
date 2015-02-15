@@ -177,6 +177,10 @@
     };
     p.prototype.notifyCollision = function (collision) {
         switch(collision.type){
+            case MyDef.Ball.Type.REFLECT:
+                createjs.Sound.play("collision", {volume:0.3});
+                this._reflectCollision(collision);
+                break;
             case MyDef.Ball.Type.DAMAGE:
                 createjs.Sound.play("damage");
                 this.setStateDamage();
@@ -217,7 +221,7 @@
         if (0 != this.actionWait) {
             return;
         }
-        createjs.Sound.play("accele",{interrupt: createjs.Sound.INTERRUPT_EARLY, volume:0.4});
+        createjs.Sound.play("accele",{interrupt: createjs.Sound.INTERRUPT_EARLY, volume:0.3});
         
         this.actionWait = 6;
         var v = MyUt.DegToV(this.rotation);

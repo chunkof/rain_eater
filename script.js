@@ -5,6 +5,7 @@ function importJS() {
         [
         // script start------------------------------
         // common
+        'script/common/debug.js',
         'script/common/utility.js',
         'script/common/_game_def.js',
         'script/common/button.js',
@@ -21,7 +22,6 @@ function importJS() {
         'script/play/border.js',
         // shooter
         'script/play/shooter/touch_shooter.js',
-        'script/play/shooter/circular_shooter.js',
         'script/play/shooter/shooter.js',
         // shooter::logic
         'script/play/shooter/logic/_def.js',

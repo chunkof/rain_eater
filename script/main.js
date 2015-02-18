@@ -46,6 +46,10 @@ var InitStage = function(){
 
 var tick =function(event) {
     MyGlobal.stage.update(event);
+
+    MyDebug.dispStr();
+    MyDebug.clearStr();
+
     stats.update();
 }
 

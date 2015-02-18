@@ -20,6 +20,7 @@ module.exports = function(grunt){
 
                         // script start------------------------------
                         // common
+                        'script/common/debug.js',
                         'script/common/utility.js',
                         'script/common/_game_def.js',
                         'script/common/button.js',

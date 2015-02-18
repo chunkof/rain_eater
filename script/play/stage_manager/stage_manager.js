@@ -16,8 +16,15 @@
         // state
         this.isGameOver = false;
         this.waitDispGameOver = false;
+        // game mode
+        this.gameMode = "ScoreAtack"
+        // game info
+        this.passedTime     =   0;
+        this.remainTime     =  60;
+        this.life           = 100;
+        this.score          =   0;
+        this.goalScore      = 100;
         // remain
-        this.remainTime     = 60;
         this.remainTimeLabel = new createjs.Text("remain",  "bold 28px Arial", "DarkGray");
         this.remainTimeLabel.textAlign = "center";
         this.remainTimeLabel.x = MyGlobal.stage.canvas.width * 0.9;
@@ -28,7 +35,6 @@
         this.remainTimeText.textAlign = "center";
         this.addChild(this.remainTimeText);
         // passed
-        this.passedTime     = 0;
         this.passedTimeLabel = new createjs.Text("score",  "bold 22px Arial", "DarkGray");
         this.passedTimeLabel.x = 80;
         this.passedTimeLabel.textAlign = "center";
@@ -70,26 +76,32 @@
         // passed time
         this.passedTime += sec;
         this.passedTimeText.text = this.passedTime.toFixed(2);
-        this._procGameOver();
+        this._updateGameState();
+        
+        // debug
+        MyDebug.addStr("Time :" + this.passedTime.toFixed(2) + "/" + this.remainTime.toFixed(2));
+        MyDebug.addStr("Life :" + this.life);
+        MyDebug.addStr("Score:" + this.score + "/" + this.goalScore);
     };
     p.prototype.notifyCollision = function(collision){
+        // pop
         var pop = {};
         switch(collision.type){
             case MyDef.Ball.Type.DAMAGE:
                 this.remainTime -= 10;
+                this.life       -= 10;
                 pop = MyGlobal.stage.addChild(new createjs.Text("-10","bold  80px Arial", collision.symbolColor));
                 pop.alpha = 0.3;
                 break;
             case MyDef.Ball.Type.HEAL:
                 this.remainTime += 10;
+                this.score      += 10;
                 pop = MyGlobal.stage.addChild(new createjs.Text("+10","bold 200px Arial", collision.symbolColor));
                 pop.alpha = 0.6;
                 break;
         }
-
         pop.x = MyGlobal.player.x;
         pop.y = MyGlobal.player.y;
-
         pop.textAlign = "center";
         pop._tick = function(){
             this.alpha-=0.02;
@@ -98,7 +110,8 @@
                 MyGlobal.stage.removeChild(this);
             }
         };
-        this._procGameOver();
+        // check game over
+        this._updateGameState();
     };
     p.prototype.selfDestruct = function(){
         if (0 == this.remainTime) {
@@ -107,7 +120,7 @@
         this.self_destruct_remain = this.remainTime;
         this.remainTime = 0;
     };
-    p.prototype._procGameOver = function(){
+    p.prototype._updateGameState = function(){
         if ((false == this.isGameOver) && (this.remainTime <= 0)){
             this.remainTime =0;
             this.isGameOver = true;

@@ -87,19 +87,19 @@
         // pop
         var pop = {};
         switch(collision.type){
-            case MyDef.Ball.Type.DAMAGE:
+            case "damage":
                 this.remainTime -= 10;
                 this.life       -= 10;
                 pop = MyGlobal.stage.addChild(new createjs.Text("-10","bold 160px Arial", MyDef.damageColor));
                 pop.alpha = 0.7;
                 break;
-            case MyDef.Ball.Type.HEAL:
+            case "heal":
                 this.remainTime += 10;
                 this.score      += 10;
                 pop = MyGlobal.stage.addChild(new createjs.Text("+10","bold 180px Arial", MyDef.healColor));
                 pop.alpha = 0.7;
                 break;
-            case MyDef.Ball.Type.HEAL_H:
+            case "healRing":
                 this.remainTime +=  5;
                 this.score      +=  5;
                 pop = MyGlobal.stage.addChild(new createjs.Text("+5","bold 120px Arial", MyDef.healColor));

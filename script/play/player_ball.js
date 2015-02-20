@@ -177,22 +177,22 @@
     };
     p.prototype.notifyCollision = function (collision) {
         switch(collision.type){
-            case MyDef.Ball.Type.REFLECT:
+            case "reflect":
                 createjs.Sound.play("collision", {volume:0.3});
                 this._reflectCollision(collision);
                 break;
-            case MyDef.Ball.Type.DAMAGE:
+            case "damage":
                 createjs.Sound.play("damage");
                 this.setStateDamage();
                 this._reflectCollision(collision);
                 MyGlobal.stageManager.notifyCollision(collision);
                 break;
-            case MyDef.Ball.Type.HEAL:
+            case "heal":
                 createjs.Sound.play("gain");
                 this.setStateHeal();
                 MyGlobal.stageManager.notifyCollision(collision);
                 break;
-            case MyDef.Ball.Type.HEAL_H:
+            case "healRing":
                 createjs.Sound.play("gain");
                 this.setStateHeal();
                 MyGlobal.stageManager.notifyCollision(collision);

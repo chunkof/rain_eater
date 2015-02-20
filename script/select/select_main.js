@@ -43,7 +43,7 @@
         tmp.x =  xlane2;
         tmp.y = plusY;
 
-        tmp = stage.addChild(new MyDef.Ball({type:MyDef.Ball.Type.DAMAGE, rad:12}));
+        tmp = stage.addChild(new MyDef.Ball({type:"damage", rad:12}));
         tmp.x = xlane3;
         tmp.y = plusY+20;
         tmp._tick = function(){};
@@ -51,7 +51,7 @@
         tmp.x = xlane3+30;
         tmp.y = plusY+5;
 
-        tmp = stage.addChild(new MyDef.Ball({type:MyDef.Ball.Type.HEAL, rad:12}));
+        tmp = stage.addChild(new MyDef.Ball({type:"heal", rad:12}));
         tmp.x = xlane3 + 140;
         tmp.y = plusY+20;
         tmp._tick = function(){};

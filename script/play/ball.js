@@ -6,12 +6,6 @@
     // Parent
     var _base = createjs.Shape;
     p.prototype = new _base();
-    // public def
-    MyDef.Ball.Type = {
-        REFLECT: 0,
-        DAMAGE : 1,
-        HEAL   : 2,
-        HEAL_H : 3};
     // Initialize
     p.prototype.initialize = function(spec) {
         _base.prototype.initialize.call(this);
@@ -31,15 +25,15 @@
         // 色
         switch (this.type)
         {
-        case MyDef.Ball.Type.REFLECT:
+        case "reflect":
             this.symbolColor = MyDef.objectColor;
             this.subColor    = MyDef.objectColorShadow;
             break;
-        case MyDef.Ball.Type.HEAL:
+        case "heal":
             this.symbolColor = MyDef.healColor;
             this.subColor    = MyDef.healColorShadow;
             break;
-        case MyDef.Ball.Type.DAMAGE:
+        case "damage":
         default:
             this.symbolColor = MyDef.damageColor;
             this.subColor    = MyDef.damageColorShadow
@@ -109,7 +103,7 @@
             (this._border_ring_len_sq > len_seq+0.1))
         {
             var org_type = this.type;
-            this.type = MyDef.Ball.Type.HEAL_H;
+            this.type = "healRing";
             player.notifyCollision(this);
             this.type = org_type;
             this.ringMargin = 0;
@@ -118,7 +112,7 @@
         else if (this._border_len_sq > len_seq+0.1)
         {
             player.notifyCollision(this);
-            if (MyDef.Ball.Type.HEAL == this.type){
+            if ("heal" == this.type){
                 MyGlobal.stage.removeChild(this);
             }
         }

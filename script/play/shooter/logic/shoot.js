@@ -52,11 +52,8 @@
         this._executeShot(owner, target);
     };
     p.prototype._executeShot = function(owner, shot){
-        var spec={};
         var speed = MyUt.GetValue(shot.speed);
-        spec.type = MyUt.GetValue(shot.type);
-        spec.rad  = MyUt.GetValue(shot.rad);
-        var ball = MyGlobal.stage.addChild(new MyDef.Ball(spec));
+        var ball = MyGlobal.stage.addChild(new MyDef.Ball(shot.spec));
         ball.x  = owner.x;
         ball.y  = owner.y;
         ball.vX = owner.aim_vX*speed;

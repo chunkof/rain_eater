@@ -192,6 +192,11 @@
                 this.setStateHeal();
                 MyGlobal.stageManager.notifyCollision(collision);
                 break;
+            case MyDef.Ball.Type.HEAL_H:
+                createjs.Sound.play("gain");
+                this.setStateHeal();
+                MyGlobal.stageManager.notifyCollision(collision);
+                break;
         }
         this.updateDraw();
 

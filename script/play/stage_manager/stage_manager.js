@@ -90,14 +90,20 @@
             case MyDef.Ball.Type.DAMAGE:
                 this.remainTime -= 10;
                 this.life       -= 10;
-                pop = MyGlobal.stage.addChild(new createjs.Text("-10","bold  80px Arial", collision.symbolColor));
-                pop.alpha = 0.3;
+                pop = MyGlobal.stage.addChild(new createjs.Text("-10","bold 160px Arial", MyDef.damageColor));
+                pop.alpha = 0.7;
                 break;
             case MyDef.Ball.Type.HEAL:
                 this.remainTime += 10;
                 this.score      += 10;
-                pop = MyGlobal.stage.addChild(new createjs.Text("+10","bold 200px Arial", collision.symbolColor));
-                pop.alpha = 0.6;
+                pop = MyGlobal.stage.addChild(new createjs.Text("+10","bold 180px Arial", MyDef.healColor));
+                pop.alpha = 0.7;
+                break;
+            case MyDef.Ball.Type.HEAL_H:
+                this.remainTime +=  5;
+                this.score      +=  5;
+                pop = MyGlobal.stage.addChild(new createjs.Text("+5","bold 120px Arial", MyDef.healColor));
+                pop.alpha = 0.5;
                 break;
         }
         pop.x = MyGlobal.player.x;

@@ -10,15 +10,25 @@
     MyDef.Ball.Type = {
         REFLECT: 0,
         DAMAGE : 1,
-        HEAL   : 2};
+        HEAL   : 2,
+        HEAL_H : 3};
     // Initialize
     p.prototype.initialize = function(spec) {
         _base.prototype.initialize.call(this);
         // add custom setup logic.
         this.vX = 0;
         this.vY = 0;
-        this.rad  = spec.rad;
-        this.type = spec.type;
+        this.rad  = MyUt.GetValue(spec.rad);
+        this.type = MyUt.GetValue(spec.type);
+        if (spec.ringMargin)
+        {
+            this.ringMargin = spec.ringMargin;
+        }
+        else
+        {
+            this.ringMargin = 0;
+        }
+        // 色
         switch (this.type)
         {
         case MyDef.Ball.Type.REFLECT:
@@ -35,23 +45,43 @@
             this.subColor    = MyDef.damageColorShadow
             break;;
         }
-        
-        var margin = 60;
+
+        // set area
+        var margin = 60 + this.ringMargin;
         this.minX = 0-this.rad-margin;
         this.maxX = MyGlobal.stage.width+this.rad+margin;
         this.minY = 0-this.rad-margin;
         this.maxY = MyGlobal.stage.height+this.rad+margin;
-        this.graphics
-            .beginFill(this.symbolColor)
-            .beginStroke(this.subColor).setStrokeStyle(2)
-            .drawCircle(0,0,this.rad);
 
-        var cache_width = this.rad + 2;
-        this.cache(-cache_width, -cache_width, cache_width*2, cache_width*2)
+        // draw
+        this._draw();
 
-        this._border_len_sq = Math.pow(this.rad + MyGlobal.player.rad, 2);
+        this._border_len_sq      = Math.pow(this.rad + MyGlobal.player.rad, 2);
+        this._border_ring_len_sq = Math.pow(this.rad+this.ringMargin + MyGlobal.player.rad, 2);
     };
     // Method
+    p.prototype._draw = function() {
+        // clear
+        this.graphics.clear()
+        // body
+        this.graphics
+        .beginFill(this.symbolColor)
+        .beginStroke(this.subColor).setStrokeStyle(2)
+        .drawCircle(0,0,this.rad);
+        var cache_width = this.rad + 2;
+        // ring
+        if (0<this.ringMargin)
+        {
+            this.graphics
+            .endFill()
+            .beginStroke(MyDef.healColor).setStrokeStyle(2)
+            .drawCircle(0,0,this.rad+this.ringMargin);
+            
+            cache_width = cache_width + this.ringMargin + 4;
+        }
+        // cache
+        this.cache(-cache_width, -cache_width, cache_width*2, cache_width*2)
+    };
     p.prototype._tick = function() {
         if (createjs.Ticker.getPaused()){return;}
         _base.prototype._tick.call(this);
@@ -75,7 +105,17 @@
             return;
         }
         var len_seq = MyUt.GetLenSq(this.x, this.y,player.x, player.y);
-        if (this._border_len_sq > len_seq+0.1)
+        if ((this.ringMargin > 0) &&
+            (this._border_ring_len_sq > len_seq+0.1))
+        {
+            var org_type = this.type;
+            this.type = MyDef.Ball.Type.HEAL_H;
+            player.notifyCollision(this);
+            this.type = org_type;
+            this.ringMargin = 0;
+            this._draw();
+        }
+        else if (this._border_len_sq > len_seq+0.1)
         {
             player.notifyCollision(this);
             if (MyDef.Ball.Type.HEAL == this.type){

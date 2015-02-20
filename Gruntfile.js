@@ -15,7 +15,7 @@ module.exports = function(grunt){
             script: {
                 src:
                     [
-                        // only release
+                        // only release------------------------------
                         'script/analysis.js',
 
                         // script start------------------------------
@@ -30,6 +30,8 @@ module.exports = function(grunt){
                         'script/data/data.js',
                         // play
                         'script/play/ball.js',
+                        'script/play/number_ball.js',
+                        'script/play/number_ball_manager.js',
                         'script/play/smog.js',
                         'script/play/stage_manager/stage_manager.js',
                         'script/play/stage_manager/pause_button.js',
@@ -37,16 +39,16 @@ module.exports = function(grunt){
                         'script/play/border.js',
                         // shooter
                         'script/play/shooter/touch_shooter.js',
-                        'script/play/shooter/circular_shooter.js',
                         'script/play/shooter/shooter.js',
                         // shooter::logic
                         'script/play/shooter/logic/_def.js',
                         'script/play/shooter/logic/aim_target.js',
+                        'script/play/shooter/logic/aim_angle.js',
                         'script/play/shooter/logic/shoot.js',
                         'script/play/shooter/logic/move.js',
-                        'script/play/shooter/logic/constant_shoot.js',
-                        'script/play/shooter/logic/aim_logic.js',
+                        // play
                         'script/play/play_main.js',
+                        // select
                         'script/select/stage_button.js',
                         'script/select/select_main.js',
                         'script/main.js'

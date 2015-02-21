@@ -134,7 +134,7 @@ var StartGame = MyDef.StartGame = function(stage_name){
         ]}));
         break;
     case "labo":
-        tmp = new MyDef.NumberBallManager();
+        tmp = new MyDef.SerialBallManager();
         tmp.pushBack({x:200,y:400});
         tmp.pushBack({x:600,y:300});
         tmp.pushBack({x:100,y:500});

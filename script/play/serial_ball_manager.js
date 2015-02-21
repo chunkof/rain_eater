@@ -2,7 +2,7 @@
     "use strict";
     var p  = function(spec) {this.initialize(spec);};
     // Object Name
-    MyDef.NumberBallManager = p;
+    MyDef.SerialBallManager = p;
     // Initialize
     p.prototype.initialize = function(spec) {
       this._balls = [];
@@ -22,7 +22,7 @@
         spec.label  = this._totalPushed.toString();
         
         // Push ball to list
-        var ball = new MyDef.NumberBall(spec);
+        var ball = new MyDef.SerialBall(spec);
         this._balls.push(ball);
         MyGlobal.stage.addChild(ball);
     };

@@ -2,7 +2,7 @@
     "use strict";
     var p  = function(spec) {this.initialize(spec);};
     // Class Name
-    window.MyDef.NumberBall = p;
+    window.MyDef.SerialBall = p;
     // Parent
     var _base = createjs.Container;
     p.prototype = new _base();
@@ -14,7 +14,7 @@
         this.x      = spec.x;
         this.y      = spec.y;
         this.alpha  = spec.alpha;
-        this.type   = "number";
+        this.type   = "serial";
         // event
         this.owner  = spec.owner;
         this.active = spec.active;

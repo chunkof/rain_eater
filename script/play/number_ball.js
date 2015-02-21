@@ -15,6 +15,9 @@
         this.y      = spec.y;
         this.alpha  = spec.alpha;
         this.type   = "number";
+        // event
+        this.owner  = spec.owner;
+        this.active = spec.active;
         // shape
         var shape = new createjs.Shape();
         shape.graphics.beginStroke(MyDef.healColor).setStrokeStyle(2).drawCircle(0,0,this.rad)
@@ -37,18 +40,22 @@
     };
     // collision
     p.prototype.collision = function(){
+        // Is Hittable ?
+        if (false == this.active){
+            return;
+        }
         var player = MyGlobal.player;
         if (!player.isHittable()){
             return;
         }
+        // Check Collision
         var len_seq = MyUt.GetLenSq(this.x, this.y,player.x, player.y);
-        
-        if (this._border_len_sq > len_seq+0.1)
-        {
-            player.notifyCollision(this);
-            if ("heal" == this.type){
-                MyGlobal.stage.removeChild(this);
-            }
+        if (this._border_len_sq <= len_seq+0.1){
+            return;
         }
+        
+        // Have a Collision
+        player.notifyCollision(this);
+        this.owner.notifyRetrieved(this);
     };
 }());

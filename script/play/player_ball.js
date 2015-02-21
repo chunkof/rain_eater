@@ -197,6 +197,11 @@
                 this.setStateHeal();
                 MyGlobal.stageManager.notifyCollision(collision);
                 break;
+            case "number":
+                createjs.Sound.play("gain");
+                this.setStateHeal();
+                MyGlobal.stageManager.notifyCollision(collision);
+                break;
         }
         this.updateDraw();
 

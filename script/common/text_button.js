@@ -3,9 +3,8 @@
     // Class Name
     var p = function(spec) {this.initialize(spec);};
     // Parent
-    MyDef.TextButton = p;
     var _base = createjs.Shape;
-    p.prototype = new _base();
+    createjs.extend(p, _base);
     // Initialize
     p.prototype.initialize = function(spec) {
         _base.prototype.constructor.call(this);

@@ -15,8 +15,8 @@ function importJS() {
         'script/data/data.js',
         // play
         'script/play/ball.js',
-        'script/play/number_ball.js',
-        'script/play/number_ball_manager.js',
+        'script/play/serial_ball.js',
+        'script/play/serial_ball_manager.js',
         'script/play/smog.js',
         'script/play/stage_manager/stage_manager.js',
         'script/play/stage_manager/pause_button.js',

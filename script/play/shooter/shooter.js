@@ -8,7 +8,7 @@
     p.prototype = new _base();
     // Initialize
     p.prototype.initialize = function(spec) {
-        _base.prototype.initialize.call(this);
+        _base.prototype.constructor.call(this);
         this.baseCircle = spec.circle;
         this.degree     = spec.degree;
         this.logics =[];

@@ -2,13 +2,13 @@
     "use strict";
     var p = function(spec) {this.initialize(spec);};
     // Class Name
-    window.MyDef.PauseButton = p;
+    MyDef.PauseButton = p;
     // Parent
     var _base = MyDef.Button;
     // Initialize
     p.prototype = new _base();
     p.prototype.initialize = function(/*spec*/) {
-        _base.prototype.initialize.call(this);
+        _base.prototype.constructor.call(this);
         this.rad = 46;
         // add custom setup logic.
         var paused = createjs.Ticker.getPaused();

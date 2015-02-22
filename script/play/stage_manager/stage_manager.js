@@ -1,17 +1,18 @@
 (function() {
+    "use strict";
+    var p  = function(spec) {this.initialize(spec);};
     // Class Name
-    window.MyDef.StageManager = p = function(spec) {this.initialize(spec);};
+    MyDef.StageManager = p;
     // Parent
     var p;
-    p.prototype = new createjs.Container();
-    p.prototype._parentInitialize = p.prototype.initialize; p.prototype._parentTick = p.prototype._tick;
+    var _base = createjs.Container;
+    p.prototype = new _base();
     // define
     var remain_color         = "white";
     var remain_color_warning = "red";
     // Initialize
     p.prototype.initialize = function(spec) {
-        this._parentInitialize();
-
+        _base.prototype.constructor.call(this);
         this.stage_name = spec.stage_name;
         // state
         this.isGameOver = false;
@@ -55,8 +56,8 @@
     };
     // Method
     p.prototype._tick = function() {
-        this._parentTick();
         if (createjs.Ticker.getPaused()){return;}
+        _base.prototype._tick.call(this);
         this.tickImpl();
     };
     p.prototype.tickImpl = function() {

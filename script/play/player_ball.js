@@ -2,12 +2,12 @@
     "use strict";
     // Class Name
     var p;
-    window.MyDef.PlayerBall = p = function () {
+    MyDef.PlayerBall = p = function () {
         this.initialize();
     };
     // Parent
-    p.prototype = new createjs.Shape();
-    p.prototype._parentInitialize = p.prototype.initialize; p.prototype._parentTick = p.prototype._tick;
+    var _base = createjs.Shape;
+    p.prototype = new _base();
     // def
     var Action = {
         IDLE  :  0,
@@ -36,7 +36,7 @@
     p.prototype.pipe_len = 22;
     p.prototype.pipe_bold = 4;
     p.prototype.initialize = function () {
-        this._parentInitialize();
+        _base.prototype.constructor.call(this);
         this.drawShapeIdle();
     };
     p.prototype.drawShapeIdle = function(){
@@ -89,7 +89,7 @@
     };
     // Method
     p.prototype._tick = function() {
-        this._parentTick();
+        _base.prototype._tick.call(this);
         if (createjs.Ticker.getPaused()){return;}
         this.tickImpl();
     };

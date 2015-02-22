@@ -2,13 +2,13 @@
     "use strict";
     var p  = function(spec) {this.initialize(spec);};
     // Class Name
-    window.MyDef.SerialBall = p;
+    MyDef.SerialBall = p;
     // Parent
     var _base = createjs.Container;
     p.prototype = new _base();
     // Initialize
     p.prototype.initialize = function(spec) {
-        _base.prototype.initialize.call(this);
+        _base.prototype.constructor.call(this);
         // basic
         this.rad    = spec.rad;
         this.x      = spec.x;

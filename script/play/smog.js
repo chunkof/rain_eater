@@ -1,24 +1,23 @@
 (function() {
     // Class Name
-    var p;
-    window.MyDef.Smog = p = function() {this.initialize();};
+    var p = function() {this.initialize();};
+    MyDef.Smog = p 
     // Parent
-    p.prototype = new createjs.Shape();
+    var _base = createjs.Shape;
+    p.prototype = new _base();
     // Initialize
-    p.prototype._parentInitialize  = p.prototype.initialize;
-    p.prototype._parentTick  = p.prototype._tick;
-    p.prototype.vX = 0;
-    p.prototype.vY = 0;
     p.prototype.initialize = function() {
-        this._parentInitialize();
+        _base.prototype.constructor.call(this);
         // add custom setup logic.
         this.graphics.beginFill(MyDef.eaterColor).drawCircle(0,0,5);
         this.alpha = 0.4;
+        this.vX = 0;
+        this.vY = 0;
     };
     // Method
     p.prototype._tick = function() {
-        this._parentTick();
         if (createjs.Ticker.getPaused()){return;}
+        _base.prototype._tick.call(this);
         this.tickImpl();
     };
     p.prototype.tickImpl = function() {

@@ -1,20 +1,19 @@
 (function() {
     "use strict";
+    var p = function(spec) {this.initialize(spec);};
     // Class Name
-    var p;
-    window.MyDef.Button = p = function(spec) {this.initialize(spec);};
+    MyDef.Button = p;
     // Parent
-    p.prototype = new createjs.Shape();
-    p.prototype._parentInitialize = p.prototype.initialize; p.prototype._parentTick = p.prototype._tick;
+    var _base = createjs.Shape;
+    p.prototype = new _base();
     // Initialize
     p.prototype.initialize = function() {
-        this._parentInitialize();
+       _base.prototype.constructor.call(this);
     };
     // Method
     p.prototype._tick = function() {
-        this._parentTick();
         if (createjs.Ticker.getPaused()){return;}
-        this.tickImpl();
+        _base.prototype._tick.call(this);
     };
     p.prototype.tickImpl = function() {
         // add custom update logic.

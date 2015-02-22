@@ -2,13 +2,13 @@
     "use strict";
     var p  = function(spec) {this.initialize(spec);};
     // Object Name
-    window.MyDef.StageButton = p;
+    MyDef.StageButton = p;
     // Parent
     var _base = createjs.Container;
     p.prototype = new _base();
     // Initialize
     p.prototype.initialize = function(spec) {
-        _base.prototype.initialize.call(this);
+        _base.prototype.constructor.call(this);
         this.stage_name = spec.text;
         var bg_color = MyUt.OR(spec.bg_color, "orange");
         var bg_rad   = 60;

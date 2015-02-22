@@ -1,15 +1,16 @@
 (function() {
+    "use strict";
+    var p = function(spec) {this.initialize(spec);};
     // Class Name
-    var p;
-    window.MyDef.Border = p = function(spec) {this.initialize(spec);};
+    MyDef.Border = p;
     // Parent
-    p.prototype = new createjs.Shape();
-    p.prototype._parentInitialize = p.prototype.initialize; p.prototype._parentTick = p.prototype._tick;
+    var _base = createjs.Shape;
+    p.prototype = new _base();
     // define
     var ref_normalize = 1;
     // Initialize
     p.prototype.initialize = function(spec) {
-        this._parentInitialize();
+        _base.prototype.constructor.call(this);
         this.x = spec.x;
         this.y = spec.y;
         this.rad  = spec.rad;
@@ -25,7 +26,7 @@
     };
     // Method
     p.prototype._tick = function() {
-        this._parentTick();
+        _base.prototype._tick.call(this);
         if (createjs.Ticker.getPaused()){return;}
         this.tickImpl();
     };

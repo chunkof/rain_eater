@@ -1,4 +1,4 @@
-window.MyDef = [];
+MyDef = [];
 (function () {
     MyDef.fps = 40;
     MyDef.bgColor = MyUt.rgb(38,38,38);

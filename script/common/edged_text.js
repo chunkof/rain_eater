@@ -8,7 +8,7 @@
     p.prototype = new _base();
     // Initialize
     p.prototype.initialize = function(text, font, fill_color, stroke_color, stroke_size,align) {
-        _base.prototype.initialize.call(this);
+        _base.prototype.constructor.call(this);
 
         stroke_color = MyUt.OR(stroke_color, "black");
         stroke_size  = MyUt.OR(stroke_size, 2);

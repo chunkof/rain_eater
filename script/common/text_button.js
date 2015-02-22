@@ -1,15 +1,14 @@
 (function() {
     "use strict";
     // Class Name
-    window.MyDef.TextButton = p = function(spec) {this.initialize(spec);};
+    var p = function(spec) {this.initialize(spec);};
     // Parent
-    var p;
-    p.prototype = new createjs.Container();
-    p.prototype._parentInitialize = p.prototype.initialize; p.prototype._parentTick = p.prototype._tick;
+    MyDef.TextButton = p;
+    var _base = createjs.Shape;
+    p.prototype = new _base();
     // Initialize
     p.prototype.initialize = function(spec) {
-        this._parentInitialize();
-
+        _base.prototype.constructor.call(this);
         var w = spec.w;
         var h = spec.h;
         var bg_color  = MyUt.OR(spec.bg_color,  "white");
@@ -31,8 +30,8 @@
     };
     // Method
     p.prototype._tick = function() {
-        this._parentTick();
         if (createjs.Ticker.getPaused()){return;}
+        _base.prototype._tick.call(this);
         this.tickImpl();
     };
     p.prototype.tickImpl = function() {

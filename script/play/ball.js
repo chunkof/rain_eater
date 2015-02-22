@@ -2,13 +2,13 @@
     "use strict";
     var p  = function(spec) {this.initialize(spec);};
     // Class Name
-    window.MyDef.Ball = p;
+    MyDef.Ball = p;
     // Parent
     var _base = createjs.Shape;
     p.prototype = new _base();
     // Initialize
     p.prototype.initialize = function(spec) {
-        _base.prototype.initialize.call(this);
+        _base.prototype.constructor.call(this);
         // add custom setup logic.
         this.vX = 0;
         this.vY = 0;

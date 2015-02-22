@@ -1,4 +1,4 @@
-window.MyDef.Data = {};
+MyDef.Data = {};
 
 (function () {
     //-----------------------

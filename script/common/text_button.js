@@ -2,8 +2,9 @@
     "use strict";
     // Class Name
     var p = function(spec) {this.initialize(spec);};
+    MyDef.TextButton = p;
     // Parent
-    var _base = createjs.Shape;
+    var _base = createjs.Container;
     createjs.extend(p, _base);
     // Initialize
     p.prototype.initialize = function(spec) {

@@ -33,7 +33,12 @@
         MyGlobal.stage.removeChild(ball);
         
         // update
-        this.updateBallsActivate();
+        if (this._balls.length > 0){
+            this.updateBallsActivate();
+        }
+        else{
+            this.appearFinishToken();
+        }
     };
     p.prototype.updateBallsActivate = function(){
         var self = this;
@@ -42,6 +47,10 @@
             ball.alpha  = self.getAlpha(order);
         });
     };
+    p.prototype.appearFinishToken = function(){
+        var token = new MyDef.FinishToken({x:MyGlobal.stage.centerX, y:MyGlobal.stage.centerY})
+        MyGlobal.stage.addChild(token);
+    }
     p.prototype.isActive = function(order){
         return (0 == order) ? true : false;
     };

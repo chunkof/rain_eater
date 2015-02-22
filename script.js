@@ -14,6 +14,7 @@ function importJS() {
         // data
         'script/data/data.js',
         // play
+        'script/play/finish_token.js',
         'script/play/ball.js',
         'script/play/serial_ball.js',
         'script/play/serial_ball_manager.js',

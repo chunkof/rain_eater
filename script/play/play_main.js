@@ -136,10 +136,6 @@ var StartGame = MyDef.StartGame = function(stage_name){
     case "labo":
         tmp = new MyDef.SerialBallManager();
         tmp.pushBack({x:200,y:400});
-        tmp.pushBack({x:600,y:300});
-        tmp.pushBack({x:100,y:500});
-        tmp.pushBack({x:600,y:100});
-        tmp.pushBack({x:100,y:600});
         tmp.pushBack({x:600,y:620});
         
         tmp = stage.addChild(new MyDef.Shooter({circle:border1, degree:  0}));

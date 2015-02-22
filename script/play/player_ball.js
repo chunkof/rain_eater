@@ -17,26 +17,27 @@
     var State = {
         IDLE  : 0,
         DAMAGE: 1,
-        HEAL:   2
+        HEAL:   2,
+        FINISH: 3
     };
     var airRegist = 0.995;
-    // Initialize
-    p.prototype.vX = 0;
-    p.prototype.vY = 0;
-    p.prototype.actionWait = 0;
-    p.prototype.actionType = Action.IDLE;
-    p.prototype.vRotation = 8;
-    // state
-    p.prototype.state     = State.IDLE;
-    p.prototype.stateRemainCount = 0;
-    p.prototype.stateCount       = 0;
-    p.prototype.isDead           = false;
-    // shape setting
-    p.prototype.rad = 8;
-    p.prototype.pipe_len = 22;
-    p.prototype.pipe_bold = 4;
     p.prototype.initialize = function () {
         _base.prototype.constructor.call(this);
+        // Initialize
+        this.vX = 0;
+        this.vY = 0;
+        this.actionWait = 0;
+        this.actionType = Action.IDLE;
+        this.vRotation = 8;
+        // state
+        this.state     = State.IDLE;
+        this.stateRemainCount = 0;
+        this.stateCount       = 0;
+        this.isDead           = false;
+        // shape setting
+        this.rad = 8;
+        this.pipe_len = 22;
+        this.pipe_bold = 4;
         this.drawShapeIdle();
     };
     p.prototype.drawShapeIdle = function(){
@@ -50,7 +51,7 @@
         if (0 == this.stateCount){
             this.graphics.clear();
         }
-        if (3 == this.stateCount){
+        if (4 == this.stateCount){
             this.drawShapeImpl(MyDef.eaterColorShadow, MyDef.eaterColor);
         }
     };
@@ -85,7 +86,7 @@
         if (this.isDead){
             return false;
         }
-        return (State.DAMAGE != this.state);
+        return ((State.IDLE == this.state)||(State.HEAL == this.state));
     };
     // Method
     p.prototype._tick = function() {
@@ -97,16 +98,36 @@
         if (this.isDead){
             return;
         }
+        if (State.FINISH == this.state){
+            this.procFinishing();
+            return;
+        }
+        // normal update
         this.updateVector();
         this.updatePos();
         this.doAction();
         this.updateState();
         this.updateDraw();
      };
+    p.prototype.procFinishing = function () {
+        // rotate
+        this.rotation = (this.rotation + this.vRotation*1.2) % 360;
+        // scale
+        this.scaleX *= 0.98;
+        this.scaleY *= 0.98;
+        // pos
+        var tgt = {x:MyGlobal.stage.centerX, y:MyGlobal.stage.centerY};
+        var adjustRad = MyUt.GetRad(this.x, this.y, tgt.x, tgt.y);
+        var adjustCos = Math.cos(adjustRad);
+        var adjustSin = Math.sin(adjustRad);
+        
+        var distance = MyUt.GetLen(tgt.x,tgt.y, this.x,this.y);
+        
+        this.x += adjustCos *(distance/30);
+        this.y += adjustSin *(distance/30);
+        
+    };
     p.prototype.updateDraw = function(){
-        if (this.isDead){
-            return;
-        }
         switch (this.state){
             case State.IDLE:
                 this.drawShapeIdle();
@@ -127,12 +148,18 @@
     p.prototype.setStateDamage = function(){
         this.state = State.DAMAGE;
         this.stateCount = 0;
-        this.stateRemainCount = MyDef.fps/6;
+        this.stateRemainCount = MyDef.fps/5;
     };
     p.prototype.setStateHeal = function(){
         this.state = State.HEAL;
         this.stateCount = 0;
         this.stateRemainCount = MyDef.fps/4;
+    };
+    p.prototype.setStateFinish = function(){
+        this.state = State.FINISH;
+        this.stateCount = 0;
+        this.actionType = Action.IDLE;
+        this.updateDraw();
     };
     p.prototype.updateState = function(){
         if (State.IDLE == this.state){
@@ -201,6 +228,11 @@
                 createjs.Sound.play("gain");
                 this.setStateHeal();
                 MyGlobal.stageManager.notifyCollision(collision);
+                break;
+            case "finish":
+                createjs.Sound.play("gain");
+                this.setStateFinish();
+
                 break;
         }
         this.updateDraw();

@@ -135,27 +135,33 @@ var StartGame = MyDef.StartGame = function(stage_name){
         break;
     case "labo":
         tmp = new MyDef.SerialBallManager();
+        tmp.pushBack({x:600,y:190});
         tmp.pushBack({x:200,y:400});
         tmp.pushBack({x:600,y:620});
+        tmp.pushBack({x:200,y:300});
+        tmp.pushBack({x:650,y:420});
+        tmp.pushBack({x:200,y:400});
         
         tmp = stage.addChild(new MyDef.Shooter({circle:border1, degree:  0}));
             tmp.logics.push(new MyDef.logic.Move(0.5));
             tmp.logics.push(new MyDef.logic.AimTarget(player));
-            tmp.logics.push(new MyDef.logic.Shoot({interval: MyDef.fps*1.3,shots:[
-                    {per:100, speed:1.3,spec:{type:"damage", rad:7.5}}
+            tmp.logics.push(new MyDef.logic.Shoot({interval: MyDef.fps*1.6,shots:[
+                    {per:100, speed:0.8,spec:{type:"reflect", rad:18}}
                 ]}));
-        tmp = stage.addChild(new MyDef.Shooter({circle:border1, degree:  90}));
+        tmp = stage.addChild(new MyDef.Shooter({circle:border1, degree:  180}));
         tmp.logics.push(new MyDef.logic.Move(0.5));
         tmp.logics.push(new MyDef.logic.AimTarget(player));
-        tmp.logics.push(new MyDef.logic.Shoot({interval: MyDef.fps*1.3, shots:[
-                    {per:100, speed:1.3,spec:{type:"damage", rad:7.5}}
+        tmp.logics.push(new MyDef.logic.Shoot({interval: MyDef.fps*1.6, shots:[
+                    {per:100, speed:0.8,spec:{type:"reflect", rad:18}}
             ]}));
+            /*
         tmp = stage.addChild(new MyDef.Shooter({circle:border1, degree:270}));
         tmp.logics.push(new MyDef.logic.Move(0.5));
         tmp.logics.push(new MyDef.logic.AimTarget(player));
         tmp.logics.push(new MyDef.logic.Shoot({interval: MyDef.fps*1.3, shots:[
                     {per:100, speed:1.3,spec:{type:"reflect", rad:7.5}}
             ]}));
+            */
         break;
     case "labo_":
         var c_3_ball_rad = function(){

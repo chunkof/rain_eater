@@ -55,6 +55,6 @@
         return (0 == order) ? true : false;
     };
     p.prototype.getAlpha = function(order){
-        return (0 == order) ? 1 : (1 - 0.25*order)*0.6;
+        return (0 == order) ? 0.9 : (1 - 0.25*order)*0.6;
     };
 }());

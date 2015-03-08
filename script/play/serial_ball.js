@@ -20,10 +20,11 @@
         this.active = spec.active;
         // shape
         var shape = new createjs.Shape();
-        shape.graphics.beginStroke(MyDef.healColor).setStrokeStyle(2).drawCircle(0,0,this.rad)
+        shape.graphics.beginStroke(MyDef.healColor).setStrokeStyle(2).drawCircle(0,0,this.rad);
         this.addChild(shape);
         // label
-        var label = new createjs.Text(spec.label, "32px Arial", MyDef.healColor);
+//        var label = new MyDef.edged_text(spec.label,  "bold 32px Arial", MyDef.healColor,MyDef.healColorShadow,2,"center", "middle");
+        var label = new createjs.Text(spec.label, "42px Myriad", MyDef.healColor);
         label.textAlign = "center";
         label.textBaseline = "middle";
         this.addChild(label);

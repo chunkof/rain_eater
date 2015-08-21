@@ -113,7 +113,7 @@
         {
             player.notifyCollision(this);
             if ("heal" == this.type){
-                MyGlobal.stage.removeChild(this);
+             //   MyGlobal.stage.removeChild(this);
             }
         }
     };

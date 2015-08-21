@@ -35,9 +35,9 @@
         this.stateCount       = 0;
         this.isDead           = false;
         // shape setting
-        this.rad = 8;
-        this.pipe_len = 22;
-        this.pipe_bold = 4;
+        this.rad = 18;
+        this.pipe_len = 52;
+        this.pipe_bold = 8;
         this.drawShapeIdle();
     };
     p.prototype.drawShapeIdle = function(){
@@ -209,16 +209,17 @@
                 this._reflectCollision(collision);
                 break;
             case "damage":
-                createjs.Sound.play("damage");
-                this.setStateDamage();
-                this._reflectCollision(collision);
-                MyGlobal.stageManager.notifyCollision(collision);
-                break;
             case "heal":
-                createjs.Sound.play("gain");
-                this.setStateHeal();
-                MyGlobal.stageManager.notifyCollision(collision);
+                createjs.Sound.play("damage");
+            //    this.setStateDamage();
+                this._reflectCollision(collision);
+              //  MyGlobal.stageManager.notifyCollision(collision);
                 break;
+//            case "heal":
+//                createjs.Sound.play("gain");
+ //               this.setStateHeal();
+ //               MyGlobal.stageManager.notifyCollision(collision);
+  //              break;
             case "healRing":
                 createjs.Sound.play("gain");
                 this.setStateHeal();
@@ -238,7 +239,42 @@
         this.updateDraw();
 
     };
+    var reflect_impl = function(t1, t2, adjust){
+        // calc angle
+        var adjustRad = MyUt.GetRad(t1.x, t1.y, t2.x, t2.y);
+        var adjustCos = Math.cos(adjustRad);
+        var adjustSin = Math.sin(adjustRad);
+        // adjust pos
+
+        if (true == adjust){
+          var distance = MyUt.GetLen(t2.x,t2.y, t1.x,t1.y);
+          var adjustLen  = (t1.rad + t2.rad) - distance;
+          t1.x -= adjustLen * adjustCos *3;
+          t1.y -= adjustLen * adjustSin *3;
+        }
+
+        // bound
+        var ref_normalize = 2.0;
+        var n={ vX:ref_normalize*adjustCos,
+                vY:ref_normalize*adjustSin};
+        var ref_vec = MyUt.GetRefVector(t1, n);
+        t1.vX = ref_vec.vX + (t2.vX*0.5) + (t1.vX*0.5);
+        t1.vY = ref_vec.vY + (t2.vY*0.5) + (t1.vY*0.5);
+        t1.x += t1.vX*2;
+        t1.y += t1.vY*2;
+    };
+    
     p.prototype._reflectCollision = function(tgt) {
+      //  reflect_impl(this,tgt, true);
+        if (true != tgt.collisioned){
+          tgt.collisioned = true;
+          reflect_impl(tgt, this, true);
+        }
+        else{
+          tgt.collisioned = false;
+        }
+        
+    /*
         // calc angle
         var adjustRad = MyUt.GetRad(this.x, this.y, tgt.x, tgt.y);
         var adjustCos = Math.cos(adjustRad);
@@ -257,6 +293,7 @@
         var ref_vec = MyUt.GetRefVector(this, n);
         this.vX = ref_vec.vX + (tgt.vX*0.5) + (this.vX*0.5);
         this.vY = ref_vec.vY + (tgt.vY*0.5) + (this.vY*0.5);
+        */
         
     } 
     p.prototype.doAccele = function () {
